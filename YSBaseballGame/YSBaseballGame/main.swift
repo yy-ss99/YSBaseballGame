@@ -11,13 +11,14 @@ var computerNumbers = makeRandomNumberWithZero()
 var gameCount = 0
 var gameOrder = 0
 var gameRecord = [Int: Int]()
+let gameRule = GameRule(digit: .three)
 
 showMenu()
 
 func makeRandomNumbers() -> [Int] {
     var randomNumbers = Set<Int>()
     
-    while randomNumbers.count < 3 {
+    while randomNumbers.count < gameRule.digit.rawValue {
         randomNumbers.insert(Int.random(in: 1...9))
     }
     return Array(randomNumbers)
@@ -26,44 +27,40 @@ func makeRandomNumbers() -> [Int] {
 func makeRandomNumberWithZero() -> [Int] {
     var randomNumbers = Set<Int>()
     
-    while randomNumbers.count < 2 {
+    while randomNumbers.count < gameRule.digit.rawValue - 1 {
         randomNumbers.insert(Int.random(in: 0...9))
     }
     var resultNumbers = Array(randomNumbers)
     
-    while resultNumbers.count < 3 {
+    while resultNumbers.count < gameRule.digit.rawValue {
         let firstNum = Int.random(in: 1...9)
         if !(resultNumbers.contains(firstNum)) {
             resultNumbers.insert(firstNum, at: 0)
         }
     }
-    print(resultNumbers)
     return resultNumbers
 }
 
 func showMenu() {
-    let startOption = "1"
-    let gameRecordOption = "2"
-    let endOption = "3"
     var isMenuShowing = true
     
     while isMenuShowing {
-        print("🥎숫자 야구 게임🥎\n1. 게임시작 2. 게임기록보기 3. 게임종료\n원하는 기능을 선택해주세요.", terminator: "")
+        print(UserInstruction.mainMenu.rawValue, terminator: "")
         guard let menuChoice = readLine() else { return }
         
         switch menuChoice {
-        case startOption:
-            print("⚾️게임을 시작합니다!⚾️")
+        case MenuChoice.start.rawValue:
+            print(UserInstruction.startOption.rawValue)
             startGame()
-        case gameRecordOption:
-            print("🏆<게임 기록 보기>🏆")
+        case MenuChoice.record.rawValue:
+            print(UserInstruction.gameRecordOption.rawValue)
             showRecord()
-        case endOption:
+        case MenuChoice.end.rawValue:
             gameRecord = [:]
-            print("게임을 종료합니다.")
+            print(UserInstruction.endOption.rawValue)
             isMenuShowing = false
         default:
-            print("❌ 올바른 숫자를 입력해주세요!")
+            print(UserInstruction.wrongInput.rawValue)
             continue
         }
     }
@@ -83,20 +80,20 @@ func startGame() {
     var isGameOn = true
  
     while isGameOn {
-        print("✏️ 숫자를 입력하세요:", terminator: "")
+        print(UserInstruction.gameStart.rawValue, terminator: "")
         
         guard let userInput = readLine(),
               let cleanedNumbers = cleanNumbers(with: userInput) else {
-            print("❌ 잘못된 입력입니다. 겹치지 않는 세자리 숫자를 입력해주세요!")
+            print(UserInstruction.wrongInput.rawValue)
             continue
         }
         gameCount += 1
         let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
         
-        if strikeCount == 3 {
+        if strikeCount == gameRule.digit.rawValue {
             isGameOn = false
             gameOrder += 1
-            print("🎉🎉🎉🎉🎉🎉\n🎉정답입니다!🎉\n🎉🎉🎉🎉🎉🎉")
+            print(UserInstruction.gameWin.rawValue)
             gameRecord[gameOrder] = gameCount
         } else {
             print("\(strikeCount)스트라이크 \(ballCount)볼")
@@ -124,7 +121,7 @@ func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
 func cleanNumbers(with input:String) -> [Int]? {
     let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
     
-    if cleanedNumbers.count > 3 || Set(cleanedNumbers).count != 3 {
+    if cleanedNumbers.count > gameRule.digit.rawValue || Set(cleanedNumbers).count != gameRule.digit.rawValue {
         return nil
     } else {
         return cleanedNumbers
