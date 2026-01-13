@@ -7,5 +7,12 @@
 
 import Foundation
 
-print("Hello, World!")
-
+func makeRandomNumbers() -> [Int] {
+    var randomNumbers = Set<Int>()
+    
+    while randomNumbers.count < 3 {
+        randomNumbers.insert(Int.random(in: 1...9))
+    }
+    
+    return Array(randomNumbers)
+}
