@@ -8,6 +8,10 @@
 import Foundation
 
 var computerNumbers = makeRandomNumberWithZero()
+var gameCount = 0
+var gameOrder = 0
+var gameRecord = [Int: Int]()
+
 showMenu()
 
 func makeRandomNumbers() -> [Int] {
@@ -44,19 +48,33 @@ func showMenu() {
     var isMenuShowing = true
     
     while isMenuShowing {
-        print("1. 게임시작 2. 게임기록보기 3. 게임종료\n원하는 기능을 선택해주세요.")
+        print("🥎숫자 야구 게임🥎\n1. 게임시작 2. 게임기록보기 3. 게임종료\n원하는 기능을 선택해주세요.", terminator: "")
         guard let menuChoice = readLine() else { return }
         
         switch menuChoice {
         case startOption:
+            print("⚾️게임을 시작합니다!⚾️")
             startGame()
         case gameRecordOption:
-            print("기록 기능 준비중")
+            print("🏆<게임 기록 보기>🏆")
+            showRecord()
         case endOption:
+            gameRecord = [:]
+            print("게임을 종료합니다.")
             isMenuShowing = false
         default:
-            print("다시 입력해주세요.")
+            print("❌ 올바른 숫자를 입력해주세요!")
             continue
+        }
+    }
+}
+
+func showRecord() {
+    if gameRecord.count == 0 {
+        return
+    } else {
+        for num in 1...gameOrder {
+            print("\(num)번째 게임 : \(gameRecord[num]!) 번 시도")
         }
     }
 }
@@ -65,24 +83,27 @@ func startGame() {
     var isGameOn = true
  
     while isGameOn {
-        print("⚾️게임을 시작합니다!⚾️\n✏️ 숫자를 입력하세요.")
+        print("✏️ 숫자를 입력하세요:", terminator: "")
         
         guard let userInput = readLine(),
               let cleanedNumbers = cleanNumbers(with: userInput) else {
             print("❌ 잘못된 입력입니다. 겹치지 않는 세자리 숫자를 입력해주세요!")
             continue
         }
-        
+        gameCount += 1
         let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
         
         if strikeCount == 3 {
-            print("🎉🎉🎉🎉🎉\n🎉 정답입니다!!🎉\n🎉🎉🎉🎉🎉")
             isGameOn = false
+            gameOrder += 1
+            print("🎉🎉🎉🎉🎉🎉\n🎉정답입니다!🎉\n🎉🎉🎉🎉🎉🎉")
+            gameRecord[gameOrder] = gameCount
         } else {
             print("\(strikeCount)스트라이크 \(ballCount)볼")
         }
     }
     computerNumbers = makeRandomNumberWithZero()
+    gameCount = 0
 }
 
 func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
