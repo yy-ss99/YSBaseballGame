@@ -7,7 +7,7 @@
 
 import Foundation
 
-let computerNumbers = makeRandomNumbers()
+let computerNumbers = makeRandomNumberWithZero()
 startGame()
 
 func makeRandomNumbers() -> [Int] {
@@ -17,6 +17,18 @@ func makeRandomNumbers() -> [Int] {
         randomNumbers.insert(Int.random(in: 1...9))
     }
     return Array(randomNumbers)
+}
+
+func makeRandomNumberWithZero() -> [Int] {
+    var randomNumbers = Set<Int>()
+    
+    while randomNumbers.count < 2 {
+        randomNumbers.insert(Int.random(in: 0...9))
+    }
+    var resultNumbers = Array(randomNumbers)
+    resultNumbers.insert(Int.random(in: 1...9), at: 0)
+
+    return resultNumbers
 }
 
 func startGame() {
@@ -29,7 +41,9 @@ func startGame() {
             print("❌ 잘못된 입력입니다. 겹치지 않는 세자리 숫자를 입력해주세요!")
             continue
         }
+        
         let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
+        
         if strikeCount == 3 {
             print("🎉 정답입니다!!")
             isGameOn = false
@@ -55,7 +69,7 @@ func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
 }
 
 func cleanNumbers(with input:String) -> [Int]? {
-    let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }.filter { $0 != 0 }
+    let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
     
     if cleanedNumbers.count > 3 || Set(cleanedNumbers).count != 3 {
         return nil
