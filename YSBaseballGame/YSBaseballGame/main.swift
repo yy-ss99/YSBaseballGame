@@ -71,7 +71,7 @@ func showRecord() {
         return
     } else {
         for num in 1...gameOrder {
-            print("\(num)번째 게임 : \(gameRecord[num]!) 번 시도")
+            print(UserInstruction.showGameRecord(num: num, gameRecord: gameRecord))
         }
     }
 }
@@ -93,10 +93,11 @@ func startGame() {
         if strikeCount == gameRule.digit.rawValue {
             isGameOn = false
             gameOrder += 1
+            gameCount += 1
             print(UserInstruction.gameWin.rawValue)
             gameRecord[gameOrder] = gameCount
         } else {
-            print("\(strikeCount)스트라이크 \(ballCount)볼")
+            print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
         }
     }
     computerNumbers = makeRandomNumberWithZero()
@@ -121,7 +122,8 @@ func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
 func cleanNumbers(with input:String) -> [Int]? {
     let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
     
-    if cleanedNumbers.count > gameRule.digit.rawValue || Set(cleanedNumbers).count != gameRule.digit.rawValue {
+    if cleanedNumbers.count > gameRule.digit.rawValue
+        || Set(cleanedNumbers).count != gameRule.digit.rawValue {
         return nil
     } else {
         return cleanedNumbers
