@@ -45,22 +45,22 @@ func showMenu() {
     var isMenuShowing = true
     
     while isMenuShowing {
-        print(UserInstruction.mainMenu.rawValue, terminator: "")
+        print(UserInstruction.mainMenu, terminator: "")
         guard let menuChoice = readLine() else { return }
         
         switch menuChoice {
         case MenuChoice.start.rawValue:
-            print(UserInstruction.startOption.rawValue)
+            print(UserInstruction.startOption)
             startGame()
         case MenuChoice.record.rawValue:
-            print(UserInstruction.gameRecordOption.rawValue)
+            print(UserInstruction.gameRecordOption)
             showRecord()
         case MenuChoice.end.rawValue:
             gameRecord = [:]
-            print(UserInstruction.endOption.rawValue)
+            print(UserInstruction.endOption)
             isMenuShowing = false
         default:
-            print(UserInstruction.wrongInput.rawValue)
+            print(UserInstruction.wrongInput)
             continue
         }
     }
@@ -80,11 +80,11 @@ func startGame() {
     var isGameOn = true
  
     while isGameOn {
-        print(UserInstruction.gameStart.rawValue, terminator: "")
+        print(UserInstruction.gameStart, terminator: "")
         
         guard let userInput = readLine(),
               let cleanedNumbers = cleanNumbers(with: userInput) else {
-            print(UserInstruction.wrongInput.rawValue)
+            print(UserInstruction.wrongInput)
             continue
         }
         gameCount += 1
@@ -94,7 +94,7 @@ func startGame() {
             isGameOn = false
             gameOrder += 1
             gameCount += 1
-            print(UserInstruction.gameWin.rawValue)
+            print(UserInstruction.gameWin)
             gameRecord[gameOrder] = gameCount
         } else {
             print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
