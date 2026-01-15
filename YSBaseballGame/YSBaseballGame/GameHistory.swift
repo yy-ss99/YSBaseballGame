@@ -24,7 +24,7 @@ struct GameHistory {
         gameRecord[gameOrder] = gameCount
     }
     
-    mutating func deleteGameRecord() {
+    mutating func resetGameRecord() {
         gameRecord = [:]
     }
     

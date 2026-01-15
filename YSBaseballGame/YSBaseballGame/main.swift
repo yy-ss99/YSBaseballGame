@@ -28,7 +28,7 @@ func showMenu() {
             print(UserInstruction.gameRecordOption)
             gameHistory.showRecord()
         case MenuChoice.end.rawValue:
-            gameHistory.deleteGameRecord()
+            gameHistory.resetGameRecord()
             print(UserInstruction.endOption)
             isMenuShowing = false
         default:
