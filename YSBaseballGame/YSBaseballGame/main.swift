@@ -57,16 +57,20 @@ func startGame() {
         if strikeCount == gameRule.digit.rawValue {
             isGameOn = false
             gameHistory.gameOrder += 1
-            gameHistory.gameCount += 1
             print(UserInstruction.gameWin)
             gameHistory.saveGameRecord()
         } else {
             print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
         }
     }
+    resetGame()
+}
+
+func resetGame() {
     computerNumbers = numberGenerator.makeRandomNumberWithZero()
     gameHistory.gameCount = 0
 }
+
 
 func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
     let sameNumbers = computerNumbers.filter { userNumbers.contains($0) }
