@@ -7,6 +7,7 @@
 
 struct BaseballGame {
     let numberGenerator = NumberGenerator()
+    let judge = Judge()
     var computerNumbers = NumberGenerator().makeRandomNumberWithZero()
     
     mutating func startGame() {
@@ -21,15 +22,16 @@ struct BaseballGame {
                 continue
             }
             gameHistory.gameCount += 1
-            let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
             
-            if strikeCount == gameRule.digit.rawValue {
+            let result = judge.evaluate(answer: computerNumbers, guess: cleanedNumbers)
+            
+            if result.strikes == gameRule.digit.rawValue {
                 isGameOn = false
                 gameHistory.gameOrder += 1
                 print(UserInstruction.gameWin)
                 gameHistory.saveGameRecord()
             } else {
-                print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
+                print(UserInstruction.showBallAndStrike(strikeCount: result.strikes, ballCount: result.balls))
             }
         }
         resetGame()
@@ -38,5 +40,16 @@ struct BaseballGame {
     mutating func resetGame() {
         computerNumbers = numberGenerator.makeRandomNumberWithZero()
         gameHistory.gameCount = 0
+    }
+
+    func cleanNumbers(with input:String) -> [Int]? {
+        let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
+        
+        if cleanedNumbers.count != gameRule.digit.rawValue
+            || Set(cleanedNumbers).count != gameRule.digit.rawValue {
+            return nil
+        } else {
+            return cleanedNumbers
+        }
     }
 }
