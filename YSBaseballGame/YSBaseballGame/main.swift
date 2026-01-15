@@ -7,39 +7,14 @@
 
 import Foundation
 
-var computerNumbers = makeRandomNumberWithZero()
+let numberGenerator = NumberGenerator()
+let gameRule = GameRule(digit: .three) // Game
+var computerNumbers = NumberGenerator().makeRandomNumberWithZero() // Game
 var gameCount = 0
 var gameOrder = 0
 var gameRecord = [Int: Int]()
-let gameRule = GameRule(digit: .three)
 
 showMenu()
-
-func makeRandomNumbers() -> [Int] {
-    var randomNumbers = Set<Int>()
-    
-    while randomNumbers.count < gameRule.digit.rawValue {
-        randomNumbers.insert(Int.random(in: 1...9))
-    }
-    return Array(randomNumbers)
-}
-
-func makeRandomNumberWithZero() -> [Int] {
-    var randomNumbers = Set<Int>()
-    
-    while randomNumbers.count < gameRule.digit.rawValue - 1 {
-        randomNumbers.insert(Int.random(in: 0...9))
-    }
-    var resultNumbers = Array(randomNumbers)
-    
-    while resultNumbers.count < gameRule.digit.rawValue {
-        let firstNum = Int.random(in: 1...9)
-        if !(resultNumbers.contains(firstNum)) {
-            resultNumbers.insert(firstNum, at: 0)
-        }
-    }
-    return resultNumbers
-}
 
 func showMenu() {
     var isMenuShowing = true
@@ -100,7 +75,7 @@ func startGame() {
             print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
         }
     }
-    computerNumbers = makeRandomNumberWithZero()
+    computerNumbers = numberGenerator.makeRandomNumberWithZero()
     gameCount = 0
 }
 
