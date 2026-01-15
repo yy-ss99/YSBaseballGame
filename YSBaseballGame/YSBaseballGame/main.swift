@@ -10,9 +10,7 @@ import Foundation
 let numberGenerator = NumberGenerator()
 let gameRule = GameRule(digit: .three) // Game
 var computerNumbers = NumberGenerator().makeRandomNumberWithZero() // Game
-var gameCount = 0
-var gameOrder = 0
-var gameRecord = [Int: Int]()
+var gameHistory = GameHistory()
 
 showMenu()
 
@@ -29,9 +27,9 @@ func showMenu() {
             startGame()
         case MenuChoice.record.rawValue:
             print(UserInstruction.gameRecordOption)
-            showRecord()
+            gameHistory.showRecord()
         case MenuChoice.end.rawValue:
-            gameRecord = [:]
+            gameHistory.deleteGameRecord()
             print(UserInstruction.endOption)
             isMenuShowing = false
         default:
@@ -41,15 +39,6 @@ func showMenu() {
     }
 }
 
-func showRecord() {
-    if gameRecord.count == 0 {
-        return
-    } else {
-        for num in 1...gameOrder {
-            print(UserInstruction.showGameRecord(num: num, gameRecord: gameRecord))
-        }
-    }
-}
 
 func startGame() {
     var isGameOn = true
@@ -62,21 +51,21 @@ func startGame() {
             print(UserInstruction.wrongInput)
             continue
         }
-        gameCount += 1
+        gameHistory.gameCount += 1
         let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
         
         if strikeCount == gameRule.digit.rawValue {
             isGameOn = false
-            gameOrder += 1
-            gameCount += 1
+            gameHistory.gameOrder += 1
+            gameHistory.gameCount += 1
             print(UserInstruction.gameWin)
-            gameRecord[gameOrder] = gameCount
+            gameHistory.saveGameRecord()
         } else {
             print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
         }
     }
     computerNumbers = numberGenerator.makeRandomNumberWithZero()
-    gameCount = 0
+    gameHistory.gameCount = 0
 }
 
 func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
