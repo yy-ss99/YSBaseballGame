@@ -7,10 +7,9 @@
 
 import Foundation
 
-let numberGenerator = NumberGenerator()
-let gameRule = GameRule(digit: .three) // Game
-var computerNumbers = NumberGenerator().makeRandomNumberWithZero() // Game
-var gameHistory = GameHistory()
+let gameRule = GameRule(digit: .three)
+var gameHistory = GameHistory() // Main = gameController
+var baseballGame = BaseballGame()
 
 showMenu()
 
@@ -24,7 +23,7 @@ func showMenu() {
         switch menuChoice {
         case MenuChoice.start.rawValue:
             print(UserInstruction.startOption)
-            startGame()
+            baseballGame.startGame()
         case MenuChoice.record.rawValue:
             print(UserInstruction.gameRecordOption)
             gameHistory.showRecord()
@@ -40,45 +39,13 @@ func showMenu() {
 }
 
 
-func startGame() {
-    var isGameOn = true
- 
-    while isGameOn {
-        print(UserInstruction.gameStart, terminator: "")
-        
-        guard let userInput = readLine(),
-              let cleanedNumbers = cleanNumbers(with: userInput) else {
-            print(UserInstruction.wrongInput)
-            continue
-        }
-        gameHistory.gameCount += 1
-        let (strikeCount, ballCount) = getGameResults(of: cleanedNumbers)
-        
-        if strikeCount == gameRule.digit.rawValue {
-            isGameOn = false
-            gameHistory.gameOrder += 1
-            print(UserInstruction.gameWin)
-            gameHistory.saveGameRecord()
-        } else {
-            print(UserInstruction.showBallAndStrike(strikeCount: strikeCount, ballCount: ballCount))
-        }
-    }
-    resetGame()
-}
-
-func resetGame() {
-    computerNumbers = numberGenerator.makeRandomNumberWithZero()
-    gameHistory.gameCount = 0
-}
-
-
 func getGameResults(of userNumbers: [Int]) -> (Int, Int) {
-    let sameNumbers = computerNumbers.filter { userNumbers.contains($0) }
+    let sameNumbers = baseballGame.computerNumbers.filter { userNumbers.contains($0) }
     var strikeCount = 0
     var ballCount = 0
     
     for num in sameNumbers {
-        if computerNumbers.firstIndex(of: num) == userNumbers.firstIndex(of: num) {
+        if baseballGame.computerNumbers.firstIndex(of: num) == userNumbers.firstIndex(of: num) {
             strikeCount += 1
         }
     }
