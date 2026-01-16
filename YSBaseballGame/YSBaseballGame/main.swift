@@ -7,5 +7,6 @@
 
 import Foundation
 
-print("Hello, World!")
-
+let rule = GameRule(digit: .three)
+let gameController = GameController(rule: rule)
+gameController.showMenu()

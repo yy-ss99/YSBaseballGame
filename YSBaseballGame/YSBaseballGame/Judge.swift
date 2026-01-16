@@ -1,0 +1,27 @@
+//
+//  Judge.swift
+//  YSBaseballGame
+//
+//  Created by Yeseul Jang on 1/15/26.
+//
+
+struct Judgement {
+    let strikes: Int
+    let balls: Int
+}
+
+struct Judge {
+    func evaluate(answer: [Int], guess: [Int]) -> Judgement {
+        let sameNumbers = answer.filter { guess.contains($0) }
+        
+        var strikes = 0
+        for num in sameNumbers {
+            if answer.firstIndex(of: num) == guess.firstIndex(of: num) {
+                strikes += 1
+            }
+        }
+        
+        let balls = sameNumbers.count - strikes
+        return Judgement(strikes: strikes, balls: balls)
+    }
+}
