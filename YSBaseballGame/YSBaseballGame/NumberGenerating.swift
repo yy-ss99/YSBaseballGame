@@ -1,17 +1,17 @@
 //
-//  NumberGenerator.swift
+//  NumberGenerating.swift
 //  YSBaseballGame
 //
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-protocol NumberGeneratorProtocol {
+protocol NumberGenerating {
     var rule: GameRule { get }
     func makeRandomNumbers() -> [Int]
     func makeRandomNumberWithZero() -> [Int]
 }
 
-extension NumberGeneratorProtocol {
+extension NumberGenerating {
     func makeRandomNumbers() -> [Int] {
         var randomNumbers = Set<Int>()
         

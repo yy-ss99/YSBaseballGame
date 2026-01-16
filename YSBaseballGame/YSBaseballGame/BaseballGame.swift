@@ -7,7 +7,7 @@
 
 
 /// 야구게임 클래스
-final class BaseballGame: NumberGeneratorProtocol {
+final class BaseballGame: NumberGenerating {
     let rule: GameRule
     private let judge = Judge()
     
