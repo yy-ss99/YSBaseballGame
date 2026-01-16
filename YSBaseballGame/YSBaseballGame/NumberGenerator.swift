@@ -4,13 +4,14 @@
 //
 //  Created by Yeseul Jang on 1/15/26.
 //
-struct NumberGenerator {
-    private let rule: GameRule
-    
-    init(rule: GameRule) {
-        self.rule = rule
-    }
-    
+
+protocol NumberGeneratorProtocol {
+    var rule: GameRule { get }
+    func makeRandomNumbers() -> [Int]
+    func makeRandomNumberWithZero() -> [Int]
+}
+
+extension NumberGeneratorProtocol {
     func makeRandomNumbers() -> [Int] {
         var randomNumbers = Set<Int>()
         

@@ -5,6 +5,8 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
+
+/// 게임의 결과를 저장하는 객체
 final class GameHistory {
     private var gameOrder = 0
     private var gameRecord = [Int: Int]()

@@ -5,7 +5,7 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-/// 게임에 관련된 것을 관리
+/// 게임에 대한 것들을 컨트롤해주는 객체
 final class GameController {
     private let rule: GameRule
     private var game: BaseballGame
