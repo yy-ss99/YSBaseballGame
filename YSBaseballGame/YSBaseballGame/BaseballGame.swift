@@ -5,12 +5,15 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-struct BaseballGame {
-    let numberGenerator = NumberGenerator()
-    let judge = Judge()
-    var computerNumbers = NumberGenerator().makeRandomNumberWithZero()
+class BaseballGame {
+    private let numberGenerator = NumberGenerator()
+    private let judge = Judge()
+    private(set) var computerNumbers = NumberGenerator().makeRandomNumberWithZero()
     
-    mutating func startGame() {
+    // init
+    
+    //GameController의 역할
+    func startGame() {
         var isGameOn = true
      
         while isGameOn {
@@ -21,7 +24,7 @@ struct BaseballGame {
                 print(UserInstruction.wrongInput)
                 continue
             }
-            gameHistory.gameCount += 1
+            gameHistory.gameCount += 1 // count는 BaseballGame
             
             let result = judge.evaluate(answer: computerNumbers, guess: cleanedNumbers)
             
@@ -37,7 +40,7 @@ struct BaseballGame {
         resetGame()
     }
 
-    mutating func resetGame() {
+    func resetGame() {
         computerNumbers = numberGenerator.makeRandomNumberWithZero()
         gameHistory.gameCount = 0
     }

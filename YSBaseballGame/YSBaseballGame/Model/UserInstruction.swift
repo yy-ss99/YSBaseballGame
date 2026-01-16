@@ -36,8 +36,4 @@ enum UserInstruction: CustomStringConvertible {
     static func showBallAndStrike(strikeCount: Int, ballCount: Int) -> String {
         return "\(strikeCount)스트라이크 \(ballCount)볼"
     }
-    
-    static func showGameRecord(num: Int, gameRecord: [Int: Int]) -> String {
-        return "\(num)번째 게임 : \(gameRecord[num]!) 번 시도"
-    }
 }
