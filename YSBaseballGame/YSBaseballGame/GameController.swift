@@ -5,13 +5,13 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-/// 게임에 대한 것들을 컨트롤해주는 객체
+/// 게임에 대한 것들을 컨트롤해줌
 final class GameController {
     private let rule: GameRule
     private var game: BaseballGame
     private var gameHistory = GameHistory()
     
-    init(rule: GameRule) { // 게임 룰은 바뀔 수도 있으니 주입하겠다는 표현
+    init(rule: GameRule) { // 게임 룰은 바뀔 수도 없도록 주입하겠다는 표현
         self.rule = rule
         self.game = BaseballGame(rule: rule)
     }
