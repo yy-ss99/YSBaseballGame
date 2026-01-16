@@ -6,8 +6,8 @@
 //
 
 final class GameHistory {
-    private(set) var gameOrder = 0
-    private(set) var gameRecord = [Int: Int]()
+    private var gameOrder = 0
+    private var gameRecord = [Int: Int]()
     
     func showRecord() {
         if gameRecord.count == 0 {

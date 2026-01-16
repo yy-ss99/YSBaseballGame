@@ -8,10 +8,6 @@
 struct Judgement {
     let strikes: Int
     let balls: Int
-    
-    var isWin: Bool {
-        return false
-    }
 }
 
 struct Judge {

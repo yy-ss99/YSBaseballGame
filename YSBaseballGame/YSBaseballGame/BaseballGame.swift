@@ -41,7 +41,7 @@ final class BaseballGame {
         return guessCount
     }
 
-    func cleanNumbers(with input:String) -> [Int]? {
+    private func cleanNumbers(with input:String) -> [Int]? {
         let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
         
         if cleanedNumbers.count != rule.digit.rawValue
