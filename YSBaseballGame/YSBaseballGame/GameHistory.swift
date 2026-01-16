@@ -5,8 +5,7 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-class GameHistory {
-    var gameCount = 0 // BaseballGame 에서 세어야 함
+final class GameHistory {
     private(set) var gameOrder = 0
     private(set) var gameRecord = [Int: Int]()
     
@@ -20,12 +19,16 @@ class GameHistory {
         }
     }
     
+    func countOrder() {
+        return gameOrder += 1
+    }
+    
     func showGameRecord(num: Int, gameRecord: [Int: Int]) -> String {
         return "\(num)번째 게임 : \(gameRecord[num]!) 번 시도"
     }
     
-    func saveGameRecord() {
-        gameRecord[gameOrder] = gameCount
+    func saveGameRecord(attempt: Int) {
+        gameRecord[gameOrder] = attempt
     }
     
     func resetGameRecord() {

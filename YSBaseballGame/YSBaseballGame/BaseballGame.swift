@@ -5,16 +5,20 @@
 //  Created by Yeseul Jang on 1/15/26.
 //
 
-class BaseballGame {
-    private let numberGenerator = NumberGenerator()
+final class BaseballGame {
+    private let rule: GameRule
+    private let numberGenerator: NumberGenerator
     private let judge = Judge()
-    private(set) var computerNumbers = NumberGenerator().makeRandomNumberWithZero()
     
-    // init
-    
-    //GameController의 역할
-    func startGame() {
+    init(rule: GameRule) { // 게임 룰은 바뀔 수도 있으니 주입하겠다는 표현
+        self.rule = rule
+        self.numberGenerator = NumberGenerator(rule: rule)
+    }
+
+    func startGame() -> Int {
         var isGameOn = true
+        let computerNumbers = numberGenerator.makeRandomNumberWithZero()
+        var guessCount = 0
      
         while isGameOn {
             print(UserInstruction.gameStart, terminator: "")
@@ -24,32 +28,24 @@ class BaseballGame {
                 print(UserInstruction.wrongInput)
                 continue
             }
-            gameHistory.gameCount += 1 // count는 BaseballGame
-            
+            guessCount += 1
             let result = judge.evaluate(answer: computerNumbers, guess: cleanedNumbers)
             
-            if result.strikes == gameRule.digit.rawValue {
+            if result.strikes == rule.digit.rawValue {
                 isGameOn = false
-                gameHistory.gameOrder += 1
                 print(UserInstruction.gameWin)
-                gameHistory.saveGameRecord()
             } else {
                 print(UserInstruction.showBallAndStrike(strikeCount: result.strikes, ballCount: result.balls))
             }
         }
-        resetGame()
-    }
-
-    func resetGame() {
-        computerNumbers = numberGenerator.makeRandomNumberWithZero()
-        gameHistory.gameCount = 0
+        return guessCount
     }
 
     func cleanNumbers(with input:String) -> [Int]? {
         let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
         
-        if cleanedNumbers.count != gameRule.digit.rawValue
-            || Set(cleanedNumbers).count != gameRule.digit.rawValue {
+        if cleanedNumbers.count != rule.digit.rawValue
+            || Set(cleanedNumbers).count != rule.digit.rawValue {
             return nil
         } else {
             return cleanedNumbers
