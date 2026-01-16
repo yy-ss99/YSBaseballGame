@@ -2,3 +2,4 @@
 
 숫자 야구 게임은 컴퓨터가 생성한 중복 없는 숫자를 맞히는 콘솔 기반 게임입니다.  
 사용자는 숫자를 입력하고 **스트라이크 / 볼 / 아웃** 결과를 통해 정답을 추론합니다.
+<img width="4320" height="4064" alt="image" src="https://github.com/user-attachments/assets/af01e73c-5419-4477-8496-3a9fbfef218d" />
