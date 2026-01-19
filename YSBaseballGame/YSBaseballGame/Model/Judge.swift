@@ -10,7 +10,11 @@ struct Judgement {
     let balls: Int
 }
 
-struct Judge {
+protocol Judging {
+    func evaluate(answer: [Int], guess: [Int]) -> Judgement
+}
+
+extension Judging {
     func evaluate(answer: [Int], guess: [Int]) -> Judgement {
         let sameNumbers = answer.filter { guess.contains($0) }
         
@@ -25,3 +29,5 @@ struct Judge {
         return Judgement(strikes: strikes, balls: balls)
     }
 }
+
+struct Judge: Judging { }
