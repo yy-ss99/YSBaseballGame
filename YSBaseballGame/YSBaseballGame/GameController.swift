@@ -11,7 +11,7 @@ final class GameController {
     private var game: BaseballGame
     private var gameHistory = GameHistory()
     
-    init(rule: GameRule) { // 게임 룰은 바뀔 수도 없도록 주입하겠다는 표현
+    init(rule: GameRule) { // 외부에서 정한 규칙을 받아서 주입 
         self.rule = rule
         self.game = BaseballGame(rule: rule)
     }
