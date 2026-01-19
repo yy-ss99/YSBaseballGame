@@ -11,10 +11,12 @@ final class GameController {
     private var gameHistory = GameHistory()
     private let judge: Judging
     private let numGenerator: NumberGenerating
+    private let inputManager: inputting
         
-    init(rule: GameRule, judge: Judging = Judge(), numGenerator: NumberGenerating? = nil) { // 외부에서 정한 규칙을 받아서 주입
+    init(rule: GameRule, judge: Judging = Judge(), numGenerator: NumberGenerating? = nil, inputManager: inputting? = nil) { // 외부에서 정한 규칙을 받아서 주입
         self.rule = rule
         self.numGenerator = numGenerator ?? NumberGenerator(rule: rule)
+        self.inputManager = inputManager ?? InputManager(rule: rule)
         self.judge = judge
     }
     
@@ -23,7 +25,7 @@ final class GameController {
         
         while isMenuShowing {
             print(UserInstruction.mainMenu, terminator: "")
-            guard let menuChoice = readLine() else { return }
+            guard let menuChoice = inputManager.readLine() else { return }
             
             switch menuChoice {
             case MenuChoice.start.rawValue:
@@ -57,15 +59,15 @@ final class GameController {
         while isGameOn {
             print(UserInstruction.gameStart, terminator: "")
             
-            guard let userInput = readLine(),
-                  let cleanedNumbers = cleanNumbers(with: userInput) else { // GameController
+            guard let userInput = inputManager.readLine(),
+                  let cleanedNumbers = inputManager.cleanNumbers(with: userInput) else {
                 print(UserInstruction.wrongInput)
                 continue
             }
             guessCount += 1
-            let result = baseballGame.evaluateOneTurn(guess: cleanedNumbers) // baseballGame
+            let result = baseballGame.evaluateOneTurn(guess: cleanedNumbers)
             
-            if baseballGame.isUserWin(judgement: result) { // baseball game
+            if baseballGame.isUserWin(judgement: result) {
                 isGameOn = false
                 print(UserInstruction.gameWin)
             } else {
@@ -73,16 +75,5 @@ final class GameController {
             }
         }
         return guessCount
-    }
-    
-    private func cleanNumbers(with input:String) -> [Int]? {
-        let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
-        
-        if cleanedNumbers.count != rule.digit.rawValue
-            || Set(cleanedNumbers).count != rule.digit.rawValue {
-            return nil
-        } else {
-            return cleanedNumbers
-        }
     }
 }
