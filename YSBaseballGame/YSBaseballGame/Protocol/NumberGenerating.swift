@@ -38,3 +38,7 @@ extension NumberGenerating {
         return resultNumbers
     }
 }
+
+struct NumberGenerator: NumberGenerating {
+    var rule: GameRule
+}
