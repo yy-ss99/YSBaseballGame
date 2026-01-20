@@ -9,15 +9,13 @@
 final class GameController {
     private let rule: GameRule
     private var gameHistory = GameHistory()
-    private let judge: Judging
     private let numGenerator: NumberGenerating
     private let inputManager: Inputting
         
-    init(rule: GameRule, judge: Judging = Judge(), numGenerator: NumberGenerating? = nil, inputManager: Inputting? = nil) { // 외부에서 정한 규칙을 받아서 주입
+    init(rule: GameRule, numGenerator: NumberGenerating? = nil, inputManager: Inputting? = nil) { // 외부에서 정한 규칙을 받아서 주입
         self.rule = rule
         self.numGenerator = numGenerator ?? NumberGenerator(rule: rule)
         self.inputManager = inputManager ?? InputManager(rule: rule)
-        self.judge = judge
     }
     
     func showMenu() {
@@ -50,7 +48,7 @@ final class GameController {
         }
     }
     
-    func startGame() -> Int {
+    private func startGame() -> Int {
         let computerNumbers = numGenerator.makeRandomNumberWithZero()
         let baseballGame = BaseballGame(rule: rule, answer: computerNumbers)
         var guessCount = 0
