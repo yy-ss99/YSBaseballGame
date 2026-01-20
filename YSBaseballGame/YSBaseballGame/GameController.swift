@@ -11,9 +11,9 @@ final class GameController {
     private var gameHistory = GameHistory()
     private let judge: Judging
     private let numGenerator: NumberGenerating
-    private let inputManager: inputting
+    private let inputManager: Inputting
         
-    init(rule: GameRule, judge: Judging = Judge(), numGenerator: NumberGenerating? = nil, inputManager: inputting? = nil) { // 외부에서 정한 규칙을 받아서 주입
+    init(rule: GameRule, judge: Judging = Judge(), numGenerator: NumberGenerating? = nil, inputManager: Inputting? = nil) { // 외부에서 정한 규칙을 받아서 주입
         self.rule = rule
         self.numGenerator = numGenerator ?? NumberGenerator(rule: rule)
         self.inputManager = inputManager ?? InputManager(rule: rule)

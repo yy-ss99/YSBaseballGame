@@ -5,13 +5,13 @@
 //  Created by Yeseul Jang on 1/19/26.
 //
 
-protocol inputting {
+protocol Inputting {
     var rule: GameRule { get }
     func cleanNumbers(with input:String) -> [Int]?
     func readLine() -> String?
 }
 
-extension inputting {
+extension Inputting {
     func cleanNumbers(with input:String) -> [Int]? {
         let cleanedNumbers = input.split(separator: "").compactMap { Int($0) }
         
@@ -24,7 +24,7 @@ extension inputting {
     }
 }
 
-struct InputManager: inputting {
+struct InputManager: Inputting {
     var rule: GameRule
     func readLine() -> String? {
         Swift.readLine()
