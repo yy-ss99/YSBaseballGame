@@ -2,13 +2,13 @@
 
 숫자 야구 게임은 컴퓨터가 생성한 중복 없는 숫자를 맞히는 콘솔 기반 게임  
 사용자는 숫자를 입력하고 **스트라이크 / 볼 / 아웃** 결과를 통해 정답을 추론함
+# 실행화면
+![baseballgame](https://github.com/user-attachments/assets/c4027adf-c2b2-436e-961f-793165b99749)
 
 # 📊 클래스 다이어그램
 <img width="5056" height="5792" alt="image" src="https://github.com/user-attachments/assets/d8946478-3cb5-44c7-9d57-7111fd25cd42" />
 
-
 # 🧐 고민 했던 점
-
 ## 1️⃣ 타입 정하기
 `main`에 함수만 주르륵 있던 코드를 분리하면서 각자 어울리는 객체 타입을 선택해주려고 했다. 나름 고민해가면서 고르는 기준을 세웠다. 
 
