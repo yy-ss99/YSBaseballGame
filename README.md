@@ -7,7 +7,22 @@
 
 # 📊 클래스 다이어그램
 <img width="5056" height="5792" alt="image" src="https://github.com/user-attachments/assets/d8946478-3cb5-44c7-9d57-7111fd25cd42" />
-
+# 🗂️ 파일 트리
+```
+├── README.md
+└── YSBaseballGame
+    ├── YSBaseballGame
+    │   ├── BaseballGame.swift
+    │   ├── GameController.swift
+    │   ├── GameHistory.swift
+    │   ├── main.swift
+    │   ├── Model
+    │   └── Protocol
+    └── YSBaseballGame.xcodeproj
+        ├── project.pbxproj
+        ├── project.xcworkspace
+        └── xcuserdata
+```
 # 🧐 고민 했던 점
 ## 1️⃣ 타입 정하기
 `main`에 함수만 주르륵 있던 코드를 분리하면서 각자 어울리는 객체 타입을 선택해주려고 했다. 나름 고민해가면서 고르는 기준을 세웠다. 
