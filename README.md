@@ -4,7 +4,8 @@
 사용자는 숫자를 입력하고 **스트라이크 / 볼 / 아웃** 결과를 통해 정답을 추론함
 
 # 📊 클래스 다이어그램
-<img width="4320" height="4064" alt="image" src="https://github.com/user-attachments/assets/8fb47206-c77c-466b-a1ac-76370e0f1b67" />
+<img width="5056" height="5792" alt="image" src="https://github.com/user-attachments/assets/d8946478-3cb5-44c7-9d57-7111fd25cd42" />
+
 
 # 🧐 고민 했던 점
 
@@ -21,8 +22,9 @@ main에 함수만 주르륵 있던 코드를 분리하면서 각자 어울리는
 - `Judgement`: 판정 결과의 답을 가짐
 - `GameRule`: 게임 규칙들의 값들
 - `Digit`: 야구게임이 진행되는 자릿수(사용자가 맞춰야하는 숫자 수)
+- `BaseballGame`: 단판을 판정해주는 기능
 
-이것들은 `struct`가 적절한 거 같다. 단순한 값들이고 규칙과 결과는 공유될 필요는 없고 오히려 공유되면 위험할 수 있다고 생각했다.
+이것들은 `struct`가 적절한 거 같다. 단순한 계산이나 값들이고 규칙과 결과는 공유될 필요는 없고 오히려 공유되면 위험할 수 있다고 생각했다.
 
 ### 💡 protocol
 어떤 기능만 하거나 로직만 있다면 protocol이 적절한 거 같다.
@@ -36,7 +38,6 @@ main에 함수만 주르륵 있던 코드를 분리하면서 각자 어울리는
 
 - `GameController`: 게임을 진행하거나 종료하고 내부 상태를 저장
 - `GameHistory`: 사용자가 몇 회차에 얼마나 시도를 했는지 저장, 종료 될 시 리셋
-- `BaseballGame`: 베이스 볼 게임을 진행함
 
 `GameHistory`는 사용자가 얼마나 몇회 차에 얼마나 시도를 했는지 저장해주는 객체이다. 처음에는 값이니까 `struct`가 아닐까 했는데 누적되는 값이고 그게 상태에 가깝다고 생각해서 `class`로 해주었다.
 `GameController`는 하나가 존재하면서 흐름을 책임지는 면이 `class`에 적절하다고 생각했다.
@@ -53,8 +54,7 @@ init(rule: GameRule) {
     self.rule = rule
 }
 ```
-- `BaseballGame`, `GameController`는 GameRule을 스스로 만들지 않고 외부에서 이미 결정된 것을 쓰도록 만듦
-- `GameController`가 규칙을 소유하고 `BaseballGame`은 그 규칙을 사용하는 구조
+- `GameController`는 GameRule을 스스로 만들지 않고 외부에서 이미 결정된 것을 쓰도록 만듦
 
 ### let 으로 선언
 ```swift
@@ -62,6 +62,4 @@ let rule: GameRule
 ```
 - 객체가 살아있는 동안에는 규칙은 바뀌지 않는다.
 
-# 😣 아쉬웠던 점
-`BaseballGame`을 `class`로 설정했었다. 그런데 하는 일도 너무 많고 게임 루프를 돌리는 것은 `GameController`이 할 일 인거 같다. 게임을 계속하게 해주는 기능을 뺀다면 인스턴스로 만들었을 때 정체성도 크지 않을 거 같고 사실상 판정만 해주면 되고 상태가 변하지도 않는다. `BaseballGame`은 사실상 주어진 게임룰에 따라 판정하는 기능만 소유하게 하고 `struct`로 바꾸는 게 맞다는 생각이 든다.
 
