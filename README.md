@@ -21,11 +21,15 @@
     │   ├── GameHistory.swift
     │   ├── main.swift
     │   ├── Model
+    │   │   ├── GameRule.swift
+    │   │   ├── Judge.swift
+    │   │   ├── MenuChoice.swift
+    │   │   └── UserInstruction.swift
     │   └── Protocol
+    │       ├── inputting.swift
+    │       ├── Judging.swift
+    │       └── NumberGenerating.swift
     └── YSBaseballGame.xcodeproj
-        ├── project.pbxproj
-        ├── project.xcworkspace
-        └── xcuserdata
 ```
 
 # 🧐 고민 했던 점 
